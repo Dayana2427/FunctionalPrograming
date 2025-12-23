@@ -1,6 +1,6 @@
 package products
 
-object HighlyRatedProducts: Conditions {
+class HighlyRatedProducts: Conditions {
     override fun isSuitable(productCard: ProductCard): Boolean {
         return productCard.productRating > 4
     }
