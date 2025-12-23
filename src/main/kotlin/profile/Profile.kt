@@ -9,16 +9,14 @@ fun main() {
     filtered = filter(filtered) {it.gender == Gender.MALE }
     filtered = filter(filtered) {it.firstName.startsWith("A")}
     filtered = filter(filtered) {it.age <30}
-    val names = transform(filtered) {it.firstName}
-    val lastNames = transform(filtered) {it.lastName}
-    val fullNames = transform(filtered) {"${it.firstName} ${it.lastName}"}
-    for(person in fullNames){
+    val transformed = transform(filtered) {it.copy(age = it.age + 1)}
+    for(person in transformed){
         println(person)
     }
 }
 
-fun transform (profiles: List<Person>, operation: (Person) -> String): List<String> {
-    val result = mutableListOf<String>()
+fun <R> transform (profiles: List<Person>, operation: (Person) -> R): List<R> {
+    val result = mutableListOf<R>()
     for (person in profiles){
         result.add(operation(person))
     }
