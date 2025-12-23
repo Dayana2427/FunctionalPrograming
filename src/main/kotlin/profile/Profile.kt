@@ -2,9 +2,28 @@ package profile
 
 fun main() {
     val profiles = ProfilesRepository.profiles
-    var filtered = filter(profiles, ConditionOlderThan25())
-    filtered = filter(filtered, ConditionMale())
-    filtered = filter(filtered, ConditionA())
+    var filtered = filter(profiles, object: Condition {
+        override fun isSuitable(person: Person): Boolean {
+            return person.age > 25
+        }
+    })
+    filtered = filter(filtered, object: Condition {
+        override fun isSuitable(person: Person): Boolean {
+            return person.gender == Gender.MALE
+        }
+    } )
+    filtered = filter(filtered, object: Condition {
+        override fun isSuitable(person: Person): Boolean {
+            return person.firstName.startsWith("A")
+        }
+    })
+
+    filtered = filter(filtered, object: Condition {
+        override fun isSuitable(person: Person): Boolean {
+            return person.age < 30
+        }
+    })
+
     for(person in filtered){
         println(person)
     }
