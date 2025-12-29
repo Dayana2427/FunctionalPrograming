@@ -1,6 +1,6 @@
 package profile
 
-import jdk.dynalink.Operation
+import extensions.transform
 
 fun main() {
     val profiles = ProfilesRepository.profiles
@@ -8,30 +8,15 @@ fun main() {
         .filter { it.gender == Gender.MALE }
         .filter { it.firstName.startsWith("A") }
         .filter { it.age <30 }
+        .toSet()
         .transform { it.copy(age = it.age + 1) }
+        .map { it.firstName }
 
     for(person in profiles){
         println(person)
     }
 }
 
-fun <R> List<Person>.transform (operation: (Person) -> R): List<R> {
-    val result = mutableListOf<R>()
-    for (person in this){
-        result.add(operation(person))
-    }
-    return result
-}
-
-fun List<Person>.filter(isSuitable: (Person) -> Boolean): List<Person> {
-    val result = mutableListOf<Person>()
-    for (person in this){
-        if (isSuitable(person)){
-            result.add(person)
-        }
-    }
-    return result
-}
 
 
 
