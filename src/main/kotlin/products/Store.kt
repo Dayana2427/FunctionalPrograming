@@ -2,26 +2,26 @@ package products
 
 fun main() {
     val products = ProductsRepository.products
-    var filtered = filter(products) {it.productCategory == ProductCategory.CLOTHING}
-    filtered = transform(filtered) {it.copy(productPrice = it.productPrice * 2)}
-    val information = transform(filtered) {"${it.id} - ${it.productName} - ${it.productPrice}"}
-    for (productCard in information){
+        .filter {it.productCategory == ProductCategory.CLOTHING}
+        .transform {it.copy(productPrice = it.productPrice * 2)}
+        .transform { "${it.id} - ${it.productName} - ${it.productPrice}" }
+    for (productCard in products){
         println(productCard)
     }
 }
 
-fun <P> transform (products: List<ProductCard>, operation: (ProductCard) -> P): List<P>{
+fun <P> List<ProductCard>.transform (operation: (ProductCard) -> P): List<P>{
     val result = mutableListOf<P>()
-    for (productCard in products){
+    for (productCard in this){
         result.add(operation(productCard))
     }
     return result
 }
 
 
-fun filter(products: List<ProductCard>, isSuitable: (ProductCard) -> Boolean): List<ProductCard> {
+fun List<ProductCard>.filter(isSuitable: (ProductCard) -> Boolean): List<ProductCard> {
     val result = mutableListOf<ProductCard>()
-    for (productCard in products){
+    for (productCard in this){
         if (isSuitable(productCard)){
             result.add(productCard)
         }
