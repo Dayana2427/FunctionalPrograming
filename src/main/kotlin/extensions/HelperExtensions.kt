@@ -1,5 +1,7 @@
 package extensions
 
+import jdk.dynalink.Operation
+
 fun <R, T> Iterable<T>.transform (operation: (T) -> R): List<R> {
     val result = mutableListOf<R>()
     for (person in this){
@@ -16,4 +18,10 @@ inline fun <T> Iterable<T>.filter(isSuitable: (T) -> Boolean): List<T> {
         }
     }
     return result
+}
+
+inline fun <T> Iterable<T>.myForEach(operation: (T) -> Unit) {
+    for (item in this){
+        operation(item)
+    }
 }
