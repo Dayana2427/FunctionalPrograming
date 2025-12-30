@@ -1,8 +1,16 @@
 package test
 
-fun main() {
-    val a = readln().toInt()
-    println(a.isPositive())
-}
+var age: Int? = 20
 
-fun Int.isPositive(): Boolean = this > 0
+fun main() {
+    val result = age?.let {
+        if (it >= 18) {
+            "Eres un adulto"
+        } else {
+            "Serás un adulto en ${18 - it} años"
+        }
+    }
+    result?.let {
+        println(it)
+    }
+}

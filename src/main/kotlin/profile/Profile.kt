@@ -4,6 +4,10 @@ import extensions.myForEach
 import extensions.transform
 
 fun main() {
+    showEmail()
+}
+
+fun filterCollection(){
     ProfilesRepository.profiles
         .filter { it.age > 25 }
         .filter { it.gender == Gender.MALE }
@@ -15,6 +19,11 @@ fun main() {
         .myForEach { println(it) }
 }
 
+fun showEmail() {
+    print("Ingrese el ID: ")
+    val id = readln().toInt()
+    ProfilesRepository.profiles.find { it.id == id }?.let { println(it.email) } ?: println("No encontrado")
+}
 
 
 

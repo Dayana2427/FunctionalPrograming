@@ -25,3 +25,7 @@ inline fun <T> Iterable<T>.myForEach(operation: (T) -> Unit) {
         operation(item)
     }
 }
+
+fun <T, R> T.myLet(block: (T) -> R): R {
+    return block(this)
+}
